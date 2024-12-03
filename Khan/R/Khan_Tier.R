@@ -177,5 +177,3 @@ plot_tier_list_advanced <- function(tier_list) {
     )
 }
 
-
-
