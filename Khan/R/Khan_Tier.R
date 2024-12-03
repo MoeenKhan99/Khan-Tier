@@ -127,11 +127,10 @@ plot_tier_list_advanced <- function(tier_list) {
   # Assign y positions based on tier
   item_data$y_pos <- as.numeric(factor(item_data$tier, levels = rev(tier_list$tiers)))
 
-  # Adjust x positions for each tier, starting at xmin = 1 and spacing items evenly
+  # Adjust x positions for each tier
   item_data <- item_data %>%
-    arrange(y_pos, items) %>%
     group_by(y_pos) %>%
-    mutate(x_pos = seq(1, length.out = n(), by = 2)) %>% # Start at 1, spaced by 2
+    mutate(x_pos = seq(1, length.out = n(), by = 1)) %>% # Ensure even spacing
     ungroup()
 
   # Debugging: Print item_data to verify correctness
@@ -152,7 +151,7 @@ plot_tier_list_advanced <- function(tier_list) {
     # Add the items to the plot
     geom_text(data = item_data,
               aes(x = x_pos, y = y_pos, label = items),
-              size = 5, color = "black", hjust = 0, vjust = 0.5) + # Align left
+              size = 5, color = "black", hjust = 0.5, vjust = 0.5) + # Center items
 
     # Adjust x-axis to hide labels and ticks
     scale_x_continuous(limits = c(0, max_x_pos + 2), labels = NULL) +
@@ -177,7 +176,6 @@ plot_tier_list_advanced <- function(tier_list) {
       plot.margin = margin(10, 10, 10, 10)
     )
 }
-
 
 
 
